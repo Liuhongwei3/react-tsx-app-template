@@ -1,26 +1,29 @@
+import { Row } from '@qunhe/muya-ui';
 import React from 'react';
-import logo from './logo.svg';
+import styled from 'styled-components';
 import './App.css';
+import ShowFields from './show-fields';
+import YapiFields from './yapi-fields';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <StyledHeader>
+        <h2>前端配置工具</h2>
+      </StyledHeader>
+
+      <Row justify='space-between'>
+        <ShowFields />
+        <YapiFields />
+      </Row>
     </div>
   );
 }
+
+const StyledHeader = styled.header`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default App;

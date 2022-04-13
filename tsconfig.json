@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "@/common/*": ["src/common/*"],
+      "@/apps/*": ["src/apps/*"]
+    },
+    "target": "es6",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node"],
+    "typeRoots": [
+      // Specify list of directories for type definition files to be included. Requires TypeScript version 2.0 or later
+      "./node_modules/@types",
+      "./src/@types"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -20,7 +28,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "webpack.config.js"]
 }
