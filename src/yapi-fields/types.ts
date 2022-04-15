@@ -1,3 +1,48 @@
+export interface Res_body {
+	res_body_is_json_schema: boolean;
+	is_default: boolean;
+	_id: string;
+	name: string;
+	status_code: number;
+	res_body_type: string;
+	res_body: string;
+}
+
+export interface IApiDetail {
+	query_path: Query_path;
+	class: string;
+	edit_uid: number;
+	status: string;
+	type: string;
+	is_page: boolean;
+	req_body_is_json_schema: boolean;
+	res_body_is_json_schema: boolean;
+	api_opened: boolean;
+	index: number;
+	req_query: Req_header[];
+	req_headers: any[];
+	req_params: any[];
+	req_body_form: any[];
+	res_bodys: Res_body[];
+	_id: number;
+	method: string;
+	catid: number;
+	title: string;
+	path: string;
+	project_id: number;
+	res_body_type: string;
+	uid: number;
+	add_time: number;
+	up_time: number;
+	__v: number;
+	desc: string;
+	markdown: string;
+	path_regex: string;
+	res_body: string;
+	vip: string;
+	username: string;
+}
+
 export interface Req_header {
 	required: string;
 	_id: string;

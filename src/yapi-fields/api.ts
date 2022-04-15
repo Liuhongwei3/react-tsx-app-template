@@ -1,12 +1,12 @@
 import request from '@/common/api';
+import { GET_YAPI_GROUP_URI } from '@/common/const';
 import { handleError } from '@/common/utils';
 import {
+    IApiDetail,
     IGetYapiGroupListResponse,
     IYapiCategory,
     IYapiInterfaceDescription
 } from './types';
-
-const GET_YAPI_GROUP_URI = '/api/openapi/group';
 
 class YapiServiceClass {
     /* 获取yapi组织列表 */
@@ -34,6 +34,11 @@ class YapiServiceClass {
                 { params }
             )
             .catch(handleError);
+    };
+
+    /** 获取指定接口的详细信息 */
+    getYapiApiById = (id: number) => {
+        return request.get<{ data: IApiDetail }>(`/api/interface/get?id=${id}`);
     };
 }
 

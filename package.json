@@ -10,6 +10,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^18.0.3",
     "@types/react-dom": "^18.0.0",
+    "@types/sortablejs": "^1.10.7",
     "@types/styled-components": "^5.1.25",
     "autoprefixer": "^10.4.4",
     "babel-loader": "^8.2.4",
@@ -31,9 +32,12 @@
     "@qunhe/muya-theme-light": "^0.3.56",
     "@qunhe/muya-ui": "^0.4.107",
     "axios": "^0.26.1",
+    "mobx": "^6.5.0",
+    "mobx-react-lite": "^3.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
+    "sortablejs": "^1.15.0",
     "styled-components": "^5.3.5"
   },
   "scripts": {
