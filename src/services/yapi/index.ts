@@ -6,7 +6,7 @@ import {
     IGetYapiGroupListResponse,
     IYapiCategory,
     IYapiInterfaceDescription
-} from './types';
+} from './type';
 
 class YapiServiceClass {
     /* 获取yapi组织列表 */

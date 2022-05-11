@@ -2,6 +2,7 @@ import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface IWithExtendAxiosRequestConfig extends AxiosRequestConfig {
     needHeaders?: boolean;  // 是否返回 response 的 headers
+    'x-auth-token'?: string;
 }
 
 declare module 'axios' {

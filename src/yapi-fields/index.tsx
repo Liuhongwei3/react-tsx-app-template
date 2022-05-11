@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { Alert, OutlineButton, Select, Space, toast } from '@qunhe/muya-ui';
 import { AddIcon } from '@qunhe/muya-theme-light';
 import { useStores } from '@/hooks/useStore';
-import YapiService from './api';
-import { IApiDetail, IGroup, IYapiCategory, IYapiInterfaceDescription } from './types';
+import YapiService from '@/services/yapi';
+import { IGroup, IYapiCategory, IYapiInterfaceDescription } from '@/services/yapi/type';
+import FieldService from '@/services/fields';
 
 const getPropertiesObj = (obj: any): any => {
     if (obj?.data) {
@@ -49,6 +50,8 @@ const getObj = (data: any) => {
 
 const YapiFields: React.FC = observer(() => {
     const store = useStores();
+    const showApiId = store.showApiId;
+    const curApi = store.curApi;
     const showFieldKeys = store.showFields.map(field => field.fieldKey);
     const [groups, setGroups] = useState<IGroup[]>([]);
     const [groupId, setGroupId] = useState<number>();
@@ -56,16 +59,20 @@ const YapiFields: React.FC = observer(() => {
     const [projectId, setProjectId] = useState<number>();
     const [categoryId, setCategoryId] = useState<number>();
     const [categorys, setCategorys] = useState<IYapiCategory[]>([]);
-    const [apiId, setApiId] = useState<number>();
+    // const [apiId, setApiId] = useState<number>();
     const [apiList, setApiList] = useState<IYapiInterfaceDescription[]>([]);
     // const [curApi, setCurApi] = useState<IYapiInterfaceDescription>();
-    const [curApi, setCurApi] = useState<IApiDetail>();
+    // const [curApi, setCurApi] = useState<IApiDetail>();
     // const [resBody, setResBody] = useState<any>();
     const [fields, setFields] = useState<any[]>([]);
 
     useEffect(() => {
         YapiService.getYapiGroupList().then(res => {
-            setGroups(res.data);
+            if (res.data) {
+                setGroups(res.data);
+            } else {
+                toast.error(res.errmsg || '获取数据失败，请重试！');
+            }
         })
     }, []);
 
@@ -100,7 +107,7 @@ const YapiFields: React.FC = observer(() => {
             // const apiItem = apiList.find(api => api.id === v);
             // const resBody = apiItem?.res_body;
 
-            setApiId(v);
+            // setApiId(v);
             // setCurApi(apiItem);
             // // setResBody();
 
@@ -114,6 +121,13 @@ const YapiFields: React.FC = observer(() => {
             //     setFields(initFields);
             // }
 
+            store.setShowApiId(v);
+            FieldService.getFieldListById(v).then(res => {
+                if (res.length) {
+                    store.setShowFields(res);
+                }
+            });
+            
             YapiService.getYapiApiById(v).then(({ data }) => {
                 let obj = typeof data.res_body === 'object' ? data.res_body : JSON.parse(data.res_body);
                 console.log(data, obj);
@@ -144,7 +158,7 @@ const YapiFields: React.FC = observer(() => {
                         type: typeof v
                     }));
                     console.log(data, obj);
-                    setCurApi(data);
+                    store.setCurApi(data);
                     setFields(initFields);
                 } else {
                     const objs = getObj(obj);
@@ -154,12 +168,12 @@ const YapiFields: React.FC = observer(() => {
                         type: typeof v
                     }));
                     console.log(data, obj);
-                    setCurApi(data);
+                    store.setCurApi(data);
                     setFields(initFields);
                 }
-            })
+            });
         },
-        [apiList],
+        [store],
     );
 
     const updateShowFields = useCallback((field: any) => {
@@ -212,7 +226,7 @@ const YapiFields: React.FC = observer(() => {
         </Select>
         <Select
             showSearch={true}
-            value={apiId}
+            value={showApiId}
             onChange={v => updateCurApi(v as number)}
         >
             {
@@ -230,7 +244,7 @@ const YapiFields: React.FC = observer(() => {
                 <p>username: {curApi.username}</p>
                 <p>Method: {curApi.method}</p>
                 <p>res_body_is_json_schema: {String(curApi.res_body_is_json_schema)}</p>
-            </div> : <Alert style={{ marginTop: 16 }} type='warning'>暂无响应体内容</Alert>
+            </div> : <Alert style={{ marginTop: 16 }} type='info'>暂无响应体内容</Alert>
         }
 
         <div style={{ maxHeight: 400, overflowY: 'scroll' }}>

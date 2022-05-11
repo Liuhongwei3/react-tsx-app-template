@@ -20,10 +20,10 @@ function App() {
   );
 }
 
+export default App;
+
 const StyledHeader = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-
-export default App;

@@ -76,6 +76,11 @@ module.exports = (env, argv) => {
                     pathRewrite: { '^/api': '' },
                     changeOrigin: true,
                 },
+                '/fieldApi': {
+                    target: 'http://localhost:3000',
+                    pathRewrite: { '^/fieldApi': '' },
+                    changeOrigin: true,
+                },
             },
             server: 'https', //'http' | 'https' | 'spdy'
         },
